@@ -1,0 +1,70 @@
+mixed-port: 7890
+allow-lan: true
+mode: Rule
+log-level: info
+external-controller: 127.0.0.1:9090
+dns:
+  enabled: true
+  nameserver:
+    - 119.29.29.29
+    - 223.5.5.5
+  fallback:
+    - 8.8.8.8
+    - 8.8.4.4
+    - tls://1.0.0.1:853
+    - tls://dns.google:853
+proxies:
+  - {"type":"vmess","name":"AlibabaCloud🇸🇬Singapore","ws-opts":{"path":"/","headers":{"host":"mir.mir222.eu.org"}},"server":"mir.mir222.eu.org","port":443,"uuid":"1d4379ed-27c2-4f12-9f69-25b8ca8b084c","alterId":0,"cipher":"auto","network":"ws","tls":true}
+  - {"type":"vmess","name":"AlibabaCloud🇭🇰HK","ws-opts":{"path":"/"},"server":"mir.mygugubird.xyz","port":443,"uuid":"cad2f27c-fa48-4d1a-e060-e55966f3b606","alterId":0,"cipher":"auto","network":"ws","tls":true}
+  - {"type":"vmess","name":"AzureDibian","ws-opts":{"path":"/"},"server":"tst.machapboy.eu.org","port":443,"uuid":"ffe5dbd2-85ae-4852-a8e2-06ef069453dc","alterId":0,"cipher":"auto","network":"ws","tls":true}
+proxy-groups:
+  - name: 🚀 中国代理
+    type: select
+    proxies:
+      - DIRECT
+      - AlibabaCloud🇸🇬Singapore
+      - AlibabaCloud🇭🇰HK
+      - AzureDibian
+  - name: 🎯 全球直连
+    type: select
+    proxies:
+      - DIRECT
+      - 🚀 中国代理
+  - name: 🛑 全球拦截
+    type: select
+    proxies:
+      - REJECT
+      - DIRECT
+  - name: 🍃 应用净化
+    type: select
+    proxies:
+      - REJECT
+      - DIRECT
+  - name: 🐟 漏网之鱼
+    type: select
+    proxies:
+      - 🚀 中国代理
+      - 🎯 全球直连
+      - AlibabaCloud🇸🇬Singapore
+      - AlibabaCloud🇭🇰HK
+      - AzureDibian
+rules:
+  - DOMAIN-SUFFIX,acl4.ssr,🎯 全球直连
+  - DOMAIN-SUFFIX,ip6-localhost,🎯 全球直连
+  - DOMAIN-SUFFIX,ip6-loopback,🎯 全球直连
+  - DOMAIN-SUFFIX,lan,🎯 全球直连
+  - DOMAIN-SUFFIX,local,🎯 全球直连
+  - DOMAIN-SUFFIX,localhost,🎯 全球直连
+  - IP-CIDR,10.0.0.0/8,🎯 全球直连,no-resolve
+  - IP-CIDR,100.64.0.0/10,🎯 全球直连,no-resolve
+  - IP-CIDR,127.0.0.0/8,🎯 全球直连,no-resolve
+  - IP-CIDR,172.16.0.0/12,🎯 全球直连,no-resolve
+  - IP-CIDR,192.168.0.0/16,🎯 全球直连,no-resolve
+  - IP-CIDR,198.18.0.0/16,🎯 全球直连,no-resolve
+  - IP-CIDR,224.0.0.0/4,🎯 全球直连,no-resolve
+  - IP-CIDR6,::1/128,🎯 全球直连,no-resolve
+  - IP-CIDR6,fc00::/7,🎯 全球直连,no-resolve
+  - IP-CIDR6,fe80::/10,🎯 全球直连,no-resolve
+  - IP-CIDR6,fd00::/8,🎯 全球直连,no-resolve
+  - GEOIP,MY,🚀 中国代理
+  - MATCH,🐟 漏网之鱼
