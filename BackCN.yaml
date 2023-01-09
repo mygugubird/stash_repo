@@ -1,0 +1,162 @@
+allow-lan: true
+dns:
+  default-nameserver:
+  - system
+  - 1.1.1.1
+  - 8.8.8.8
+  - 175.141.173.197
+  enabled: true
+  fake-ip-filter: []
+  fallback:
+  - 8.8.8.8
+  - 8.8.4.4
+  - tls://1.0.0.1:853
+  - tls://dns.google:853
+  nameserver:
+  - system
+  - 1.1.1.1
+  - 8.8.4.4
+external-controller: 127.0.0.1:9090
+log-level: info
+mixed-port: 7890
+mode: Rule
+proxies:
+- "alterId": 0
+  "cipher": "auto"
+  "name": "AlibabaCloud\U0001F1F8\U0001F1ECSingapore"
+  "network": "ws"
+  "port": 443
+  "server": "mir.mir222.eu.org"
+  "tls": true
+  "type": "vmess"
+  "uuid": "1d4379ed-27c2-4f12-9f69-25b8ca8b084c"
+  "ws-opts":
+    "headers":
+      "host": "mir.mir222.eu.org"
+    "path": "/"
+- "alterId": 0
+  "cipher": "auto"
+  "name": "AlibabaCloud\U0001F1ED\U0001F1F0HK"
+  "network": "ws"
+  "port": 443
+  "server": "mir.mygugubird.xyz"
+  "tls": true
+  "type": "vmess"
+  "uuid": "cad2f27c-fa48-4d1a-e060-e55966f3b606"
+  "ws-opts":
+    "path": "/"
+- "alterId": 0
+  "cipher": "auto"
+  "name": "AzureDibian"
+  "network": "ws"
+  "port": 443
+  "server": "tst.machapboy.eu.org"
+  "tls": true
+  "type": "vmess"
+  "uuid": "ffe5dbd2-85ae-4852-a8e2-06ef069453dc"
+  "ws-opts":
+    "path": "/"
+proxy-groups:
+- icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/China.png
+  name: 中国代理
+  proxies:
+  - 全球直连
+  - DIRECT
+  - "AlibabaCloud\U0001F1F8\U0001F1ECSingapore"
+  - "AlibabaCloud\U0001F1ED\U0001F1F0HK"
+  - AzureDibian
+  type: select
+- icon: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/icon/mini/direct.png
+  name: 全球直连
+  proxies:
+  - AzureDibian
+  - "AlibabaCloud\U0001F1ED\U0001F1F0HK"
+  - "AlibabaCloud\U0001F1F8\U0001F1ECSingapore"
+  - DIRECT
+  type: select
+- icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/AfreecaTV.png
+  name: 全球拦截
+  proxies:
+  - REJECT
+  - DIRECT
+  type: select
+- icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Apple_Update.png
+  name: 应用净化
+  proxies:
+  - 全球直连
+  - REJECT
+  - DIRECT
+  type: select
+- icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Hijacking.png
+  name: 漏网之鱼
+  proxies:
+  - REJECT
+  - DIRECT
+  - "AlibabaCloud\U0001F1F8\U0001F1ECSingapore"
+  - "AlibabaCloud\U0001F1ED\U0001F1F0HK"
+  - AzureDibian
+  type: select
+- icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/App_Store.png
+  name: AppStore
+  proxies:
+  - 全球直连
+  - DIRECT
+  type: select
+proxy-providers: {}
+rule-providers:
+  Advertisting:
+    behavior: classical
+    interval: 86400
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Advertising/Advertising.yaml
+  AppStore:
+    behavior: classical
+    interval: 86400
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/AppStore/AppStore.yaml
+  China:
+    behavior: classical
+    interval: 86400
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/China/China.yaml
+  Direct:
+    behavior: classical
+    interval: 86400
+    url: ' https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Direct/Direct.yaml'
+  Domain:
+    behavior: domain-text
+    interval: 86400
+    url: https://fastly.jsdelivr.net/gh/Loyalsoldier/surge-rules@release/proxy.txt
+  Icloud:
+    behavior: domain-text
+    interval: 86400
+    url: https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/icloud.txt
+rules:
+- DOMAIN-SUFFIX,Direct,DIRECT
+- DOMAIN-SUFFIX,xp.apple.com,DIRECT
+- DOMAIN-SUFFIX,gsas.apple.com,DIRECT
+- DOMAIN-SUFFIX,mesu.apple.com,DIRECT
+- DOMAIN,mdwy5.com.,DIRECT
+- IP-CIDR,100.64.0.0/10,DIRECT,no-resolve
+- IP-CIDR,127.0.0.0/8,DIRECT,no-resolve
+- IP-CIDR6,::1/128,DIRECT,no-resolve
+- DOMAIN-SUFFIX,AppStore,DIRECT
+- DOMAIN-SUFFIX,Advertisting,REJECT
+- DOMAIN-SUFFIX,google.com,DIRECT
+- DOMAIN-SUFFIX,China,DIRECT
+- DOMAIN-SUFFIX,acl4.ssr,DIRECT
+- DOMAIN-SUFFIX,ip6-localhost,DIRECT
+- DOMAIN-SUFFIX,ip6-loopback,DIRECT
+- DOMAIN-SUFFIX,lan,DIRECT
+- DOMAIN-SUFFIX,local,DIRECT
+- DOMAIN-SUFFIX,localhost,DIRECT
+- IP-CIDR,10.0.0.0/8,DIRECT,no-resolve
+- IP-CIDR,172.16.0.0/12,DIRECT,no-resolve
+- IP-CIDR,192.168.0.0/16,DIRECT,no-resolve
+- IP-CIDR,169.254.0.0/16,DIRECT,no-resolve
+- IP-CIDR,255.255.255.255/32,DIRECT,no-resolve
+- IP-CIDR,240.0.0.0/4,DIRECT,no-resolve
+- IP-CIDR,198.18.0.0/16,DIRECT,no-resolve
+- IP-CIDR,224.0.0.0/4,DIRECT,no-resolve
+- IP-CIDR6,fc00::/7,DIRECT,no-resolve
+- IP-CIDR6,fe80::/10,DIRECT,no-resolve
+- IP-CIDR6,fd00::/8,DIRECT,no-resolve
+- GEOIP,MY,DIRECT
+- MATCH,DIRECT
